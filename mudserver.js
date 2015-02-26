@@ -1,5 +1,5 @@
 /*
- * Include things.
+ * Include everything.
  */
 
 var net = require('net');
@@ -30,7 +30,7 @@ var rooms = {
 /*
  * Send text to all clients.
  * 
- * I envisioned this as being a method on a server class but nodejs didnt co-operate in the limited hours I had.
+ * I envisioned this as being a method on a server class but nodejs didnt co-operate in the limited time I had.
  */
 function sendToAllClients(data) {
 	for(var i = 0; i < clients.length; i++) {
@@ -40,8 +40,9 @@ function sendToAllClients(data) {
 };
 
 /*
- * Send text to all clients except one.
- * I envisioned this as being a method on a server class but nodejs didnt co-operate in the limited hours I had.
+ * Send text to all fully logged in clients except the one.
+ * 
+ * I envisioned this as being a method on a server class but nodejs didnt co-operate in the limited time I had.
  */
 function sendToAllOtherClients(socket, data) {
 	for(var i = 0; i< clients.length; i++) {
@@ -55,7 +56,7 @@ function sendToAllOtherClients(socket, data) {
 /*
  * Send text and client sending it to the command system.
  *
- * I envisioned this as being a method on a server class but nodejs didnt co-operate in the limited hours I had.
+ * I envisioned this as being a method on a dedicated command controller class but nodejs didnt co-operate in the limited time I had.
  * 
  * Also: NodeJS/NPM hates the low memory of the RasberryPi I'm using to host node so while I would love to use the Command pattern here
  * NPM can not even read its own index without crashing so if a lib exists that can do this, I'm not aware of it.
@@ -183,6 +184,7 @@ function sendToCommandSystem(client, data) {
 
 /*
  * Disconnect the clients socket and remove them from the client list.
+ *
  * I envisioned this as being a method on a server class but nodejs didnt co-operate in the limited time I had.
  */
 function disconnectClient(client) {
@@ -209,7 +211,7 @@ function newClientConnection(socket)
 
 		// Broken windows clients will write newlines after every character.
 		// This does not fix that client bug nor is it indended to.
-		// This deals with telnet codes and newlines in the most expediant way.
+		// This deals with telnet codes and newlines in the most expediant way given my limited time.
 		data = data.toString().trim().replace(/(\r\n|\n|\r)/gm, '').replace(/ /g, '_').replace(/\W/g, '').replace(/_/g, ' ').trim();
 
 		if( data == ''){
@@ -242,6 +244,8 @@ module.exports = {
 
 	/*
 	 * Run the server on the port specified when it was constructed
+	 *
+	 * Nothing else we have defined needs to be public.
 	 */
 	Create: function(port) {
 		var server = net.createServer(newClientConnection);

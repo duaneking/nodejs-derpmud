@@ -1,3 +1,6 @@
+/*
+ * The client player object.
+ */
 function MudClient(socket) {
 	this.socket = socket;
 	this.text = '';
